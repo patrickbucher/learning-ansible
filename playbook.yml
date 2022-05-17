@@ -1,0 +1,15 @@
+---
+- hosts: linux
+  become: true
+  tasks:
+  - name: Ensure vim is installed on Linux.
+    package:
+      name: vim
+      state: present
+- hosts: bsd
+  become: true
+  tasks:
+  - name: Ensure vim is installed on OpenBSD.
+    package:
+      name: vim--no_x11
+      state: present
