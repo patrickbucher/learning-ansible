@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/bookworm64"
-  config.vm.network :forwarded_port, host: 8000, guest: 80
-  config.vm.network :forwarded_port, host: 8443, guest: 443
-  # config.vm.network :private_network, ip: "192.168.56.100"
+  config.vm.network :forwarded_port, id: "ssh", guest: 22, host: 2202, host_ip: "127.0.0.1"
+  config.vm.network :forwarded_port, id: "http", guest: 80, host: 8080, host_ip: "127.0.0.1"
+  config.vm.network :forwarded_port, id: "https", guest: 443, host: 8443, host_ip: "127.0.0.1"
 end

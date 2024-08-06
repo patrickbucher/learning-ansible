@@ -100,3 +100,30 @@ Install a package (e.g. `htop`) using super user privileges (`-b`/`--become`):
 
     $ ansible testserver -b -a 'apt-get update' 
     $ ansible testserver -b -m package -a name=htop
+
+Show the inventory as a graph:
+
+    $ ansible-inventory --graph
+
+## Playbooks
+
+A playbook consists of one or multiple _Plays_, each with one or multiple
+_Tasks_ (see `webservers.yml` as an example: one play with many tasks).
+
+Run a playbook:
+
+    $ ansible-playbook webservers.yml
+
+Run `yamllint` on a playbook for syntactic validation:
+
+    $ yamllint webservers.yml
+
+Run `ansible-lint` on a playbook for semantic validation:
+
+    $ ansible-lint webservers.yml
+
+## Documentation
+
+Open the documentation for a module, e.g. `service`:
+
+    $ ansible-doc service

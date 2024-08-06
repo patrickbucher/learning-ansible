@@ -1,0 +1,46 @@
+---
+- name: Configure nginx webserver
+  hosts: webservers
+  become: true
+  vars:
+    tls_dir: /etc/nginx/ssl/
+    key_file: nginx.key
+    cert_file: nginx.crt
+    conf_file: /etc/nginx/sites-available/default
+    server_name: localhost
+  handlers:
+    - name: Nginx is restarted
+      service:
+        name: nginx
+        state: restarted
+  tasks:
+    - name: Nginx is installed
+      package:
+        name: nginx
+        update-cache: true
+        state: present
+    - name: Config file is present
+      template:
+        src: nginx.conf.jinja2
+        dest: "{{ conf_file }}"
+        mode: '0644'
+      notify: Nginx is restarted
+    - name: Copy certificates
+      copy:
+        src: "{{ item }}"
+        dest: "{{ tls_dir }}"
+        mode: '0600'
+      loop:
+        - "{{ key_file }}"
+        - "{{ cert_file }}"
+      notify: Nginx is restarted
+    - name: Configuration is enabled
+      file:
+        src: /etc/nginx/sites-available/default
+        dest: /etc/nginx/sites-enabled/default
+        state: link
+      notify: Nginx is restarted
+    - name: index.html is present
+      template:
+        src: index.html.jinja2
+        dest: /usr/share/nginx/html/index.html
