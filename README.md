@@ -1,5 +1,8 @@
 # Learning Ansible
 
+Working through _Ansible Up & Running_ 3rd Edition (O'Reilly) by Bas Meijer,
+Lorin Hochstein, and René Moser
+
 ## Setup
 
 Install Ansible (on Arch Linux):
